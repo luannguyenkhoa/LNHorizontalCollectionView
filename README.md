@@ -11,7 +11,7 @@ A custom collection view flow layout with horizontal scrolling and paging.
 
 ## Demo
 
-![image](https://github.com/luannguyenkhoa/UICollectionViewHorizontalFlowLayout/blob/master/CollectionViewHorizontalLayout/ScreenShot.png?raw=true)
+![image](https://cloud.githubusercontent.com/assets/13121441/19566625/3741c348-9715-11e6-8966-b02f68a4b66b.png)
 
 ## Usage
 
