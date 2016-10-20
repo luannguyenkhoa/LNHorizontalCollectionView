@@ -21,8 +21,8 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
     // initial content
-    let leftImages = Array(repeating: ["image": "left-side", "title": "Da Nang - Love Brigde"], count: 10)
-    let rightImages = Array(repeating: ["image": "right-side", "title": "Da Nang - DHC-Marina"], count: 10)
+    let leftImages = Array(count: 10, repeatedValue: ["image": "left-side", "title": "Da Nang - Love Brigde"])
+    let rightImages = Array(count: 10, repeatedValue: ["image": "right-side", "title": "Da Nang - DHC-Marina"])
     listItems =  zip(leftImages, rightImages).flatMap({ [$0.0, $0.1]})
     
     // Number of items in one row
@@ -42,11 +42,13 @@ class ViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
-  func lazyLoadLocalImage(named: String, forImgView: UIImageView) {
-    DispatchQueue.global().async {
-      let img = UIImage(named: named)
-      DispatchQueue.main.async(execute: {
-        forImgView.image = img
+  func lazyLoadLocalImage(forImgView: UIImageView) -> (String) -> () {
+    return { named in
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+        let img = UIImage(named: named)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+          forImgView.image = img
+        })
       })
     }
   }
@@ -59,17 +61,16 @@ extension ViewController: UICollectionViewDataSource {
     return 1
   }
   
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return listItems.count
   }
   
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "initialCell", for: indexPath)
+  func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("initialCell", forIndexPath: indexPath)
     // Render image by named to imageview
     if let imgView = cell.viewWithTag(101) as? UIImageView {
       let named = listItems[indexPath.row]["image"] ?? ""
-      lazyLoadLocalImage(named: named, forImgView: imgView)
+      lazyLoadLocalImage(imgView)(named)
     }
     // Render title text to label
     if let lb = cell.viewWithTag(102) as? UILabel {
@@ -83,6 +84,7 @@ extension ViewController: UICollectionViewDataSource {
     
     return cell
   }
+  
 }
 
 extension ViewController: UICollectionViewDelegate {
@@ -90,7 +92,7 @@ extension ViewController: UICollectionViewDelegate {
 }
 
 extension ViewController: UIScrollViewDelegate {
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+  func scrollViewDidScroll(scrollView: UIScrollView) {
     // Update UIPageControl current page while horizontal scrolling
     let pageWidth = collectionView.bounds.size.width
     pageControl.currentPage = Int(collectionView.contentOffset.x / pageWidth)
