@@ -1,0 +1,16 @@
+PODS:
+  - LNHorizontalCollectionView (0.1.0)
+
+DEPENDENCIES:
+  - LNHorizontalCollectionView (from `../`)
+
+EXTERNAL SOURCES:
+  LNHorizontalCollectionView:
+    :path: ../
+
+SPEC CHECKSUMS:
+  LNHorizontalCollectionView: c4b334676e362206974bc40850325a1c09cfcc86
+
+PODFILE CHECKSUM: de0f75f7b5bd67f824b635dba46e2a31a8fe3b4f
+
+COCOAPODS: 1.1.0.rc.2

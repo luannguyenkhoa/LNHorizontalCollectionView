@@ -7,14 +7,37 @@
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+A custom collection view flow layout with horizontal scrolling and paging.
+
+## Demo
+
+![image](https://github.com/luannguyenkhoa/UICollectionViewHorizontalFlowLayout/blob/master/CollectionViewHorizontalLayout/ScreenShot.png?raw=true)
+
+## Usage
+
+. Just adding code below into viewDidLoad func in your viewcontroller :
+
+```
+let flowLayout = HorizontalFlowLayout()
+flowLayout?.maximumSpacing = 5
+collectionView?.collectionViewLayout = flowLayout!
+```
+
+. Default value of the number cell in one row is 2.
+
+. In order to change the number cell in one row, using ``let flowLayout = HorizontalFlowLayout(numberInOneRow: 3)`` instead.  
 
 ## Requirements
+
+. Xcode 8
+
+. Swift 3
 
 ## Installation
 
 LNHorizontalCollectionView is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
+
 
 ```ruby
 pod "LNHorizontalCollectionView"
@@ -22,7 +45,7 @@ pod "LNHorizontalCollectionView"
 
 ## Author
 
-Luan Nguyen, luan.nguyenkhoa@asnet.com.vn
+Luan Nguyen, nkluan91@gmail.com
 
 ## License
 

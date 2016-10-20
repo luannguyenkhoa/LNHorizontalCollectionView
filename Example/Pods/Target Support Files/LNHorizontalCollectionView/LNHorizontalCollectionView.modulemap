@@ -1,0 +1,6 @@
+framework module LNHorizontalCollectionView {
+  umbrella header "LNHorizontalCollectionView-umbrella.h"
+
+  export *
+  module * { export * }
+}
